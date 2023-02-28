@@ -5,11 +5,10 @@ import numpy as np
 
 # Import data
 df = pd.read_csv("medical_examination.csv", index_col="id")
-print(df.head())
-# Add 'overweight' column
-df['overweight'] = df.insert(loc=0, column='overweight', value=(df['weight'] / df['height']))
 
-print(df.head())
+# Add 'overweight' column
+df['overweight'] = (df['weight'] / (df['height'] / 100) ** 2).apply(lambda BMI: 1 if BMI > 25 else 0)
+
 
 
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
