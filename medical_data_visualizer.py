@@ -9,11 +9,9 @@ df = pd.read_csv("medical_examination.csv", index_col="id")
 # Add 'overweight' column
 df['overweight'] = (df['weight'] / (df['height'] / 100) ** 2).apply(lambda BMI: 1 if BMI > 25 else 0)
 
-
-
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
-
-
+df['cholesterol'] = df['cholesterol'].apply(lambda chol: 1 if chol > 1 else 0)
+df['gluc'] = df['gluc'].apply(lambda chol: 1 if chol > 1 else 0)
 # Draw Categorical Plot
 def draw_cat_plot():
     # Create DataFrame for cat plot using `pd.melt` using just the values from 'cholesterol', 'gluc', 'smoke', 'alco', 'active', and 'overweight'.
