@@ -37,8 +37,8 @@ def draw_cat_plot():
 def draw_heat_map():
     # Clean the data
     df_heat = df[
-        df['ap_lo'] <= df['ap_hi'] and df['height'].quantile(0.025) <= df['height'] <= df['height'].quantile(0.975) and
-        df['weight'].quantile(0.025) <= df['weight'] <= df['weight'].quantile(0.975)]
+        (df['ap_lo'] <= df['ap_hi']) & df['height'].between(df['height'].quantile(0.025), df['height'].quantile(0.975)) &
+        df['weight'].between(df['weight'].quantile(0.025), df['weight'].quantile(0.975))]
 
     # Calculate the correlation matrix
     corr = df_heat.corr(method="pearson")
@@ -50,6 +50,7 @@ def draw_heat_map():
     fig, ax = plt.subplots(figsize=(12,12))
 
     # Draw the heatmap with 'sns.heatmap()'
+    sns.heatmap(corr, mask=mask, linewidths=1, annot=True, square=True)
 
     # Do not modify the next two lines
     fig.savefig('heatmap.png')
