@@ -36,7 +36,9 @@ def draw_cat_plot():
 # Draw Heat Map
 def draw_heat_map():
     # Clean the data
-    df_heat = df[df['ap_lo'] <= df['ap_hi'] and df['height'] >= df['height'].quantile(0.025) and df['height'] <= df['height'].quantile(0.975) and df['weight'] >= df['weight'].quantile(0.025) and df['weight'] <= df['weight'].quantile(0.975)]
+    df_heat = df[
+        df['ap_lo'] <= df['ap_hi'] and df['height'].quantile(0.025) <= df['height'] <= df['height'].quantile(0.975) and
+        df['weight'].quantile(0.025) <= df['weight'] <= df['weight'].quantile(0.975)]
 
     # Calculate the correlation matrix
     corr = df_heat.corr(method="pearson")
@@ -45,7 +47,7 @@ def draw_heat_map():
     mask = np.triu(corr)
 
     # Set up the matplotlib figure
-    fig, ax = None
+    fig, ax = plt.subplots(figsize=(12,12))
 
     # Draw the heatmap with 'sns.heatmap()'
 
